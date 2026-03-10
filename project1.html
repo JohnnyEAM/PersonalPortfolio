@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Website - Johnny El-Ammar</title>
+  <link rel="stylesheet" href="css/projects.css">
+  <link rel="stylesheet" href="css/project1.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" href="img/logo.png" type="image/x-icon">
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#projects" class="active">Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="burger"><span></span><span></span><span></span></div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="project-hero">
+    <div class="hero-bg-text">PORT</div>
+    <div class="project-hero-inner">
+      <div class="project-hero-text">
+        <p class="hero-tag">// project 01</p>
+        <h1 class="section-title">Portfolio Website</h1>
+        <p class="section-subtitle">A responsive, animated personal portfolio built from scratch with HTML, CSS, and JavaScript.</p>
+        <div class="tag-row">
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Figma</span>
+          <span class="tag">GitHub Pages</span>
+        </div>
+        <span class="project-status">&#9889; Status: Live</span>
+      </div>
+      <div class="project-hero-img-wrap">
+        <img src="img/web-home.png" alt="Portfolio Website Screenshot">
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- Overview -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Overview</h2>
+      <p class="detail-section-desc">No frameworks, no templates, no page builders. I wrote this site from scratch because I wanted to actually understand what I was building. Every animation, layout, and interaction is hand-coded.</p>
+      <div class="principles-grid">
+        <div class="principle-card"><i class="fas fa-mobile-alt"></i> Fully responsive - works properly on mobile, tablet, and desktop.</div>
+        <div class="principle-card"><i class="fas fa-bolt"></i> No Bootstrap, no Tailwind, no frameworks. Just HTML, CSS, and vanilla JS.</div>
+        <div class="principle-card"><i class="fas fa-paint-brush"></i> Dark theme with a red accent - designed it myself, not picked from a template.</div>
+        <div class="principle-card"><i class="fas fa-magic"></i> Scroll-triggered animations built with IntersectionObserver - no libraries.</div>
+      </div>
+    </div>
+
+    <!-- Design & Planning -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Design &amp; Planning</h2>
+      <p class="detail-section-desc">I did a rough plan in Figma before touching any code. Wanted to know where everything was going before I started building it.</p>
+      <div class="hardware-grid">
+        <div class="hardware-card">
+          <h3><i class="fas fa-pencil-ruler" style="margin-right:8px;"></i>Wireframing</h3>
+          <p>Simple low-fidelity wireframes in Figma mapped out the page structure - hero, about, qualifications, projects, and contact - before any visual design decisions were made.</p>
+        </div>
+        <div class="hardware-card">
+          <h3><i class="fas fa-palette" style="margin-right:8px;"></i>Visual Direction</h3>
+          <p>Off-black backgrounds (#111), a bold red accent (#ff4b2b), and Poppins as the typeface. Minimal use of colour to keep things sharp and focused on the content.</p>
+        </div>
+        <div class="hardware-card">
+          <h3><i class="fas fa-sitemap" style="margin-right:8px;"></i>Structure</h3>
+          <p>Planned as a single-page site with smooth anchor scrolling, a mobile burger menu, and separate HTML pages for individual project deep-dives.</p>
+        </div>
+      </div>
+      <div class="img-feature animate-on-scroll">
+        <img src="img/figma.png" alt="Figma Design">
+        <div class="img-feature-caption">
+          <span class="caption-tag">Tool</span>
+          <p>Quick wireframes in Figma to map out the structure before writing any HTML.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Development -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Development</h2>
+      <p class="detail-section-desc">Everything written by hand. Separate CSS and JS files per page to keep things clean and easy to maintain.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3><i class="fab fa-html5" style="margin-right:8px;"></i>HTML5</h3>
+          <p>Semantic, accessible markup throughout. Each page is its own HTML file with clean structure and proper heading hierarchy.</p>
+          <span class="service-status status-live">&#9679; Core</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fab fa-css3-alt" style="margin-right:8px;"></i>CSS3</h3>
+          <p>Modular CSS per page - styles.css for the homepage, about.css, projects.css, and page-specific overrides. Flexbox and CSS Grid for all layouts. Full mobile responsiveness with media queries.</p>
+          <span class="service-status status-live">&#9679; Core</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fab fa-js" style="margin-right:8px;"></i>JavaScript</h3>
+          <p>Small focused JS files for each behaviour - burger menu, scroll animations, hero entrance, form handling, and project animations. No libraries.</p>
+          <span class="service-status status-live">&#9679; Core</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fas fa-magic" style="margin-right:8px;"></i>Animations</h3>
+          <p>IntersectionObserver API used throughout for scroll-triggered entrance animations. CSS transitions handle hover states and micro-interactions.</p>
+          <span class="service-status status-live">&#9679; Core</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fas fa-envelope" style="margin-right:8px;"></i>Contact Form</h3>
+          <p>Form submissions handled via Formspree - no backend required. Includes client-side validation and a redirect to a thank you page on success.</p>
+          <span class="service-status status-live">&#9679; Live</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fas fa-mobile-alt" style="margin-right:8px;"></i>Responsive</h3>
+          <p>Fully responsive across all breakpoints. Burger menu on mobile, fluid grids, and scaled typography using clamp() for smooth scaling.</p>
+          <span class="service-status status-live">&#9679; Live</span>
+        </div>
+      </div>
+      <div class="img-feature animate-on-scroll">
+        <img src="img/port.png" alt="Portfolio Development">
+        <div class="img-feature-caption">
+          <span class="caption-tag">Build</span>
+          <p>Built in VS Code. Separate files per page so nothing becomes a mess to maintain.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deployment -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Deployment</h2>
+      <p class="detail-section-desc">Hosted on GitHub Pages. Free, straightforward, and deploys automatically when I push to main.</p>
+      <div class="hardware-grid">
+        <div class="hardware-card">
+          <h3><i class="fab fa-github" style="margin-right:8px;"></i>GitHub Pages</h3>
+          <p>Served straight from the GitHub repo. No server to manage, no cost, and it deploys automatically on push.</p>
+        </div>
+        <div class="hardware-card">
+          <h3><i class="fas fa-code-branch" style="margin-right:8px;"></i>Version Control</h3>
+          <p>Full Git history from the first commit. Every change is tracked - useful when something breaks and you need to go back.</p>
+        </div>
+        <div class="hardware-card">
+          <h3><i class="fas fa-globe" style="margin-right:8px;"></i>Future Plans</h3>
+          <p>Custom domain is on the list. Eventually want to add a blog and maybe a proper backend, but not until there's a good reason to.</p>
+        </div>
+      </div>
+      <div class="img-feature animate-on-scroll">
+        <img src="img/GitHub-logo.jpg" alt="GitHub">
+        <div class="img-feature-caption">
+          <span class="caption-tag">Hosting</span>
+          <p>GitHub Pages handles HTTPS and deploys on every push to main. Does the job well.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back -->
+    <div style="padding: 3rem 0; text-align: center;">
+      <a href="index.html#projects" class="btn">&#8592; Back to Projects</a>
+    </div>
+
+  </div>
+
+  <script src="js/scroll-animations.js"></script>
+  <script src="js/burger.js"></script>
+</body>
+</html>

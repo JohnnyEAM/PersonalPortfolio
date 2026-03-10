@@ -1,0 +1,363 @@
+/* ===== Global Theme ===== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #111; /* off-black */
+  color: #fff;
+  text-align: center;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ff4b2b; /* accent hover color */
+}
+/* BURGER 4 MOBILE   */
+/* Burger hidden on desktop */
+.burger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.burger span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Mobile menu styles */
+@media (max-width: 768px) {
+    .nav-links {
+    position: absolute;
+    top: 60px; /* place below navbar */
+    right: 0;
+    width: 100%;
+    height: 0;               /* fully collapsed */
+    overflow: hidden;        /* hide content */
+    background: #111;
+    flex-direction: column;
+    align-items: center;
+    transition: height 0.3s ease;
+    z-index: 999;
+    padding: 0;              /* remove extra spacing that leaks links */
+  }
+    .nav-links li {
+    width: 100%;
+    text-align: center;
+    margin: 9px 0; /* spacing for links when opened */
+  }
+
+
+  .nav-links.open {
+    height: 200px; /* expands dropdown */
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  /* Animate burger when active */
+  .burger.toggle span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .burger.toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger.toggle span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+}
+.section-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color:#ff4b2b;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 3rem 0;
+}
+
+/* ===== Hero Section ===== */
+.project-hero {
+  text-align: center;
+  padding: 20px;
+}
+
+.project-hero img {
+  width: 800px; /* bigger square */
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px; /* slight rounding for modern feel */
+  border: 4px solid #3f3b3b; /* highlight color */
+  margin-bottom: 1.5rem;
+}
+
+.project-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.project-subtitle {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* ===== Project Boxes ===== */
+.project-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.project-box {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: #1a1a1a;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.project-box img {
+  width: 600px;   /* decent fixed width */
+  height: 300px;  /* keep them square */
+  object-fit: cover;  /* crops neatly without stretching */
+  border-radius: 10px;
+  margin-right: 20px;
+  flex-shrink: 0;  /* prevents image from squishing */
+}
+
+/* Alternate left/right layouts */
+.project-box:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.box-image img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid #ff0000;
+}
+
+.box-text h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.box-text p {
+  color: #ddd;
+}
+.btn {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #ff4b2b;
+  border-bottom: 2px solid transparent;
+  transition: 0.3s;
+  margin: 40px 0;
+}
+.btn:hover {
+  text-decoration: underline;
+  padding:5px;
+}
+/* ===== Animations ===== */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.animate-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+.project-box-content h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #fff;
+  border-left: 5px solid #ff4747; /* accent line */
+}
+.link.info{
+  color:#ff4747;
+  text-decoration:none;
+}
+
+/* ===== Project Status Tag ===== */
+.project-status {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ff4b2b;
+  background: rgba(255, 75, 43, 0.1);
+  border: 1px solid #ff4b2b;
+  border-radius: 6px;
+}
+
+/* ===== Responsive Design ===== */
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  /* Navbar */
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-links a {
+    font-size: 1rem;
+  }
+
+  /* Hero Section */
+  .project-hero img {
+  width: 800px;
+  height: auto;        /* was 400px -- change to auto so full image shows */
+  max-width: 100%;
+  object-fit: contain; /* was cover -- contain shows the whole image */
+  border-radius: 12px;
+  border: 4px solid #3f3b3b;
+  margin-bottom: 1.5rem;
+}
+
+  /* Project Boxes */
+  .project-details {
+    gap: 2rem;
+  }
+
+  .project-box {
+    flex-direction: column !important;
+    padding: 1.5rem;
+  }
+
+  .project-box img,
+  .box-image img {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+  }
+
+  .box-text h2 {
+    font-size: 1.5rem;
+  }
+
+  .box-text p {
+    font-size: 0.9rem;
+  }
+
+  /* Project Box Content Title */
+  .project-box-content h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  /* Buttons */
+  .btn {
+    font-size: 0.9rem;
+    margin: 20px 0;
+  }
+
+  /* Section Titles */
+  .section-title {
+    font-size: 24px;
+  }
+
+  /* Container Padding */
+  .container {
+    padding: 2rem 1rem;
+  }
+}
+
+/* ===== Medium Screen Responsive (850px–1000px) ===== */
+@media (min-width: 850px) and (max-width: 1000px) {
+  /* Navbar */
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 25px;
+  }
+
+  .nav-links a {
+    font-size: 1.05rem;
+  }
+
+  /* Hero Section */
+  .project-hero img {
+    width: 100%;
+    max-width: 750px;
+    height: auto;
+  }
+
+  /* Project Boxes */
+  .project-box {
+    flex-direction: column !important;
+    padding: 1.8rem;
+  }
+
+  .project-box img,
+  .box-image img {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+  }
+
+  .box-text h2 {
+    font-size: 1.6rem;
+  }
+
+  .box-text p {
+    font-size: 1rem;
+  }
+
+  /* Project Box Content Title */
+  .project-box-content h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+  }
+
+  /* Buttons */
+  .btn {
+    font-size: 0.95rem;
+    margin: 25px 0;
+  }
+
+  /* Section Titles */
+  .section-title {
+    font-size: 26px;
+  }
+
+  /* Container Padding */
+  .container {
+    padding: 2.5rem 2rem;
+  }
+}

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Lab - Johnny El-Ammar</title>
+  <link rel="stylesheet" href="css/projects.css">
+  <link rel="stylesheet" href="css/project3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" href="img/logo.png" type="image/x-icon">
+</head>
+<script>
+  function fetchDownload(url, filename) {
+    fetch(url)
+      .then(r => r.blob())
+      .then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      });
+  }
+</script>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#projects" class="active">Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="project-hero animate-on-scroll">
+    <img src="img/network.jpg" alt="Home Lab" class="project-hero-img">
+    <h1 class="section-title">Home Lab Private Network</h1>
+    <p class="section-subtitle">A self-hosted, privacy-focused lab built on second-hand hardware - running real services behind a proper firewall.</p>
+    <div class="tag-row">
+      <span class="tag">Proxmox VE</span>
+      <span class="tag">OPNsense</span>
+      <span class="tag">Pi-hole</span>
+      <span class="tag">Vaultwarden</span>
+      <span class="tag">Tailscale</span>
+      <span class="tag">WireGuard / Mullvad</span>
+      <span class="tag">Docker</span>
+      <span class="tag">Caddy</span>
+    </div>
+    <span class="project-status">&#9889; Status: Live &amp; Running</span>
+  </section>
+
+  <div class="container">
+
+    <!-- Overview -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Overview</h2>
+      <p class="detail-section-desc">The lab runs across three Dell OptiPlex machines and provides network-level ad blocking, encrypted VPN routing for all LAN traffic, self-hosted password management, media serving, and remote access - all on second-hand hardware. The network is segmented behind a dedicated OPNsense firewall VM. All LAN traffic is routed through a Mullvad WireGuard tunnel, and remote access is handled exclusively via Tailscale with no ports open to the internet.</p>
+      <div class="principles-grid">
+        <div class="principle-card"><i class="fas fa-lock"></i> No ports exposed to the internet. All remote access goes through Tailscale.</div>
+        <div class="principle-card"><i class="fas fa-user-shield"></i> All LAN traffic exits through Mullvad WireGuard - ISP cannot see traffic content or destinations.</div>
+        <div class="principle-card"><i class="fas fa-route"></i> Tailscale traffic bypasses the VPN tunnel so remote access always works regardless of VPN state.</div>
+        <div class="principle-card"><i class="fas fa-server"></i> DNS handled internally by Pi-hole. No DNS leaks to ISP or third parties.</div>
+        <div class="principle-card"><i class="fas fa-cubes"></i> Services are isolated to purpose-built VMs. No service runs directly on a Proxmox host.</div>
+      </div>
+    </div>
+
+    <!-- Hardware -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Hardware</h2>
+      <p class="detail-section-desc">Three Dell OptiPlex machines, each with a dedicated role.</p>
+      <div class="hardware-grid">
+        <div class="hardware-card">
+          <h3><i class="fas fa-fire-alt" style="margin-right:8px;"></i>OptiPlex 390 - Firewall Node</h3>
+          <p>Runs OPNsense as a VM. Built-in NIC (eno1) is the WAN interface; PCIe Intel 82574L NIC (enp2s0) is the LAN interface. Neither Proxmox bridge has a host IP - management is via Tailscale only. Acts as the sole gateway between the internet and the rest of the network.</p>
+        </div>
+        <div class="hardware-card">
+          <h3><i class="fas fa-hdd" style="margin-right:8px;"></i>OptiPlex 7040 - Main Hypervisor</h3>
+          <p>Primary Proxmox node hosting the main service VMs - Pi-hole, Samba NAS, Vaultwarden, and Uptime Kuma. All services run in isolated VMs with static IPs on the 10.0.0.0/24 subnet. Reachable via Tailscale subnet router.</p>
+        </div>
+        <div class="hardware-card">
+          <h3><i class="fas fa-film" style="margin-right:8px;"></i>OptiPlex 7050 - Media Node <span class="badge-planned">Planned</span></h3>
+          <p>Will host Jellyfin for self-hosted media serving. Planned as part of the Proxmox cluster expansion, with VM migration and high availability across all three nodes once set up.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Network Architecture -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Network Architecture</h2>
+      <p class="detail-section-desc">The Sky router provides WAN and feeds into OPNsense. All devices connect through an unmanaged switch behind the LAN NIC on the 390. OPNsense is the sole gateway.</p>
+      <div class="flow-block">
+        <span class="flow-label">Default LAN Traffic Flow</span>
+        Device on 10.0.0.x<br>
+        <span class="arrow">--&gt;</span> OPNsense LAN (10.0.0.1)<br>
+        <span class="arrow">--&gt;</span> WireGuard tunnel (wg0 / MULLVAD interface)<br>
+        <span class="arrow">--&gt;</span> Mullvad VPN server (encrypted)<br>
+        <span class="arrow">--&gt;</span> Internet
+      </div>
+      <div class="flow-block">
+        <span class="flow-label">Tailscale Traffic - Bypasses VPN</span>
+        Tailscale traffic (dst 100.64.0.0/10)<br>
+        <span class="arrow">--&gt;</span> OPNsense LAN<br>
+        <span class="arrow">--&gt;</span> WAN_DHCP (bypasses Mullvad)<br>
+        <span class="arrow">--&gt;</span> Tailscale control plane / peer
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Services</h2>
+      <p class="detail-section-desc">All services run in isolated VMs on the 7040. Each has a static IP and is reachable locally or via Tailscale.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3><i class="fas fa-filter" style="margin-right:8px;"></i>Pi-hole</h3>
+          <p>DNS server and network-wide ad blocker. Pushed to all devices via DHCP option 6 through Dnsmasq. Prevents DNS queries reaching the ISP.</p>
+          <span class="service-status status-live">&#9679; Live</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fas fa-folder-open" style="margin-right:8px;"></i>Samba NAS</h3>
+          <p>Network file share running on the Ubuntu VM. NAS drive mounted via fstab with NTFS-3G. Accessible from any device on the LAN.</p>
+          <span class="service-status status-live">&#9679; Live</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fas fa-key" style="margin-right:8px;"></i>Vaultwarden</h3>
+          <p>Self-hosted Bitwarden-compatible password manager running in Docker. Exposed via Caddy reverse proxy with Tailscale HTTPS certificates. Not accessible from the internet.</p>
+          <span class="service-status status-live">&#9679; Live</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fas fa-chart-line" style="margin-right:8px;"></i>Uptime Kuma</h3>
+          <p>Service monitoring dashboard running in Docker. Tracks uptime for all VMs and services with alerting.</p>
+          <span class="service-status status-live">&#9679; Live</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fas fa-play-circle" style="margin-right:8px;"></i>Jellyfin</h3>
+          <p>Self-hosted media server planned for the OptiPlex 7050. Will be accessible via Tailscale once the media node is set up.</p>
+          <span class="service-status status-planned">&#9675; Planned</span>
+        </div>
+        <div class="service-card">
+          <h3><i class="fas fa-shield-alt" style="margin-right:8px;"></i>OPNsense</h3>
+          <p>Firewall VM on the 390. Handles WAN/LAN routing, Mullvad WireGuard tunnel, DHCP, firewall rules, and Tailscale bypass policy.</p>
+          <span class="service-status status-live">&#9679; Live</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Remote Access -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Remote Access - Tailscale</h2>
+      <p class="detail-section-desc">Tailscale is the only way into the network from outside. No ports are open on OPNsense.</p>
+      <div class="hardware-grid">
+        <div class="hardware-card">
+          <h3><i class="fas fa-network-wired" style="margin-right:8px;"></i>Subnet Router</h3>
+          <p>The Ubuntu VM advertises the 10.0.0.0/24 subnet over Tailscale. Any device on the tailnet can reach local services by their 10.0.0.x IP without needing Tailscale installed on each individual VM.</p>
+        </div>
+        <div class="hardware-card">
+          <h3><i class="fas fa-certificate" style="margin-right:8px;"></i>HTTPS Certificates</h3>
+          <p>Tailscale HTTPS certificates are issued for the Vaultwarden VM's ts.net hostname. This allows the Bitwarden mobile app to trust the connection without certificate warnings.</p>
+        </div>
+        <div class="hardware-card">
+          <h3><i class="fas fa-eye-slash" style="margin-right:8px;"></i>No Local Surface on 390</h3>
+          <p>The OptiPlex 390 Proxmox node has no local management IP by design. The Proxmox UI on that node is only reachable via Tailscale, eliminating any local attack surface for the firewall host.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Security</h2>
+      <p class="detail-section-desc">Security is a core part of the lab's design, not an afterthought. The network is built around a zero-trust approach - no ports are exposed to the internet, all remote access is authenticated, and traffic is encrypted end-to-end. The lab is continuously reviewed and hardened as it evolves.</p>
+      <div class="principles-grid">
+        <div class="principle-card"><i class="fas fa-ban"></i> Zero inbound ports - no attack surface exposed to the internet.</div>
+        <div class="principle-card"><i class="fas fa-user-lock"></i> All remote access is gated behind authenticated, encrypted tunnels.</div>
+        <div class="principle-card"><i class="fas fa-eye-slash"></i> ISP-level traffic visibility eliminated via full-tunnel VPN routing.</div>
+        <div class="principle-card"><i class="fas fa-sync-alt"></i> Security posture is actively reviewed and improved as the lab grows.</div>
+      </div>
+    </div>
+
+    <!-- Future Plans -->
+    <div class="detail-section animate-on-scroll">
+      <h2 class="detail-section-title">Future Plans</h2>
+      <p class="detail-section-desc">Planned expansions across networking, services, infrastructure, and security.</p>
+      <div class="future-grid">
+        <div class="future-card">
+          <h3><i class="fas fa-sitemap" style="margin-right:8px;"></i>Network</h3>
+          <ul>
+            <li>VLAN segmentation</li>
+            <li>WiFi AP via OPNsense</li>
+            <li>Suricata IDS/IPS</li>
+            <li>Mullvad kill switch</li>
+            <li>Pi-hole over HTTPS</li>
+          </ul>
+        </div>
+        <div class="future-card">
+          <h3><i class="fas fa-th-large" style="margin-right:8px;"></i>Services</h3>
+          <ul>
+            <li>Jellyfin on 7050</li>
+            <li>Central reverse proxy</li>
+            <li>Heimdall dashboard</li>
+            <li>Gitea for config versioning</li>
+            <li>Immich photo backup</li>
+          </ul>
+        </div>
+        <div class="future-card">
+          <h3><i class="fas fa-layer-group" style="margin-right:8px;"></i>Infrastructure</h3>
+          <ul>
+            <li>Proxmox cluster (3 nodes)</li>
+            <li>Proxmox Backup Server</li>
+            <li>Dedicated NAS VM</li>
+            <li>UPS for power protection</li>
+          </ul>
+        </div>
+        <div class="future-card">
+          <h3><i class="fas fa-shield-alt" style="margin-right:8px;"></i>Security</h3>
+          <ul>
+            <li>SSH keys on all VMs</li>
+            <li>Fail2ban on all VMs</li>
+            <li>2FA across all services</li>
+            <li>Automated security updates</li>
+            <li>Regular firewall rule review</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Download -->
+    <div class="download-section animate-on-scroll">
+      <div>
+        <h3><i class="fas fa-file-alt" style="color:#ff4b2b; margin-right:10px;"></i>Full Documentation *Full Security Posture Redacted*</h3>
+        <p><span>SHA-256:</span> 5e4da0678a772b9814cdb06c3fda342d65146ae407041360ee1481cea7efb554</p>
+      </div>
+      <a href="Homelab_Documentation_Public.docx" download="Homelab_Documentation.docx" class="btn-dl">
+        <i class="fas fa-download" style="margin-right:8px;"></i>Download Docs
+      </a>
+    </div>
+
+     <div class="download-section animate-on-scroll">
+      <div>
+        <h3><i class="fas fa-file-alt" style="color:#ff4b2b; margin-right:10px;"></i>Full Network Toplogy *Sensitive Information Redacted*</h3>
+        <p><span>SHA-256:</span> c47e92c367405114673696b3457e99aaa2acfdb88a3f5fca02e309e2423717ee</p>
+      </div>
+      <a href="Topolgy_Homelab.docx" download="Homelab_Topology.jpg" class="btn-dl">
+        <i class="fas fa-download" style="margin-right:8px;"></i>Download Img
+      </a>
+    </div>
+
+    <!-- Back -->
+    <div style="padding: 3rem 0; text-align: center;">
+      <a href="index.html#projects" class="btn">&#8592; Back to Projects</a>
+    </div>
+
+  </div>
+
+  <script src="js/scroll-animations.js"></script>
+  <script src="js/burger.js"></script>
+</body>
+</html>
